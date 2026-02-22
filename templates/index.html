@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LegalEase — AI Legal Document Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="grain"></div>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <span class="logo-mark">⚖</span>
+                <span class="logo-text">LegalEase</span>
+            </div>
+            <p class="tagline">AI-Powered Legal Documentation</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Draft Legal Documents<br><em>in Seconds</em></h1>
+            <p class="hero-sub">Powered by Google Gemini AI — generate professional contracts, NDAs, leases, and more with a single click.</p>
+        </section>
+
+        <div class="app-container">
+            <!-- Left: Form Panel -->
+            <div class="form-panel">
+                <div class="doc-type-selector">
+                    <h2>Select Document Type</h2>
+                    <div class="doc-tabs">
+                        <button type="button" class="doc-tab active" data-type="employment_contract">Employment Contract</button>
+                        <button type="button" class="doc-tab" data-type="nda">NDA</button>
+                        <button type="button" class="doc-tab" data-type="lease_agreement">Lease</button>
+                        <button type="button" class="doc-tab" data-type="service_agreement">Service</button>
+                    </div>
+                </div>
+
+                <form id="doc-form" novalidate>
+                    <input type="hidden" id="document_type" name="document_type" value="employment_contract" />
+
+                    <!-- Employment Contract Fields -->
+                    <div class="field-group" id="group-employment_contract">
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="employer_name">Employer Name <span class="req">*</span></label>
+                                <input type="text" id="employer_name" name="employer_name" required>
+                            </div>
+                            <div class="field">
+                                <label for="employee_name">Employee Name <span class="req">*</span></label>
+                                <input type="text" id="employee_name" name="employee_name" required>
+                            </div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="job_title">Job Title <span class="req">*</span></label>
+                                <input type="text" id="job_title" name="job_title" required>
+                            </div>
+                            <div class="field">
+                                <label for="start_date">Start Date <span class="req">*</span></label>
+                                <input type="date" id="start_date" name="start_date" required>
+                            </div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="salary">Salary <span class="req">*</span></label>
+                                <input type="text" id="salary" name="salary" placeholder="e.g., $50,000/year" required>
+                            </div>
+                            <div class="field">
+                                <label for="work_location">Work Location <span class="req">*</span></label>
+                                <input type="text" id="work_location" name="work_location" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="additional_terms">Additional Terms</label>
+                            <textarea id="additional_terms" name="additional_terms" placeholder="Any additional clauses or terms..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- NDA Fields -->
+                    <div class="field-group hidden" id="group-nda">
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="party_one_nda">Disclosing Party <span class="req">*</span></label>
+                                <input type="text" id="party_one_nda" name="party_one_nda" required>
+                            </div>
+                            <div class="field">
+                                <label for="party_two_nda">Receiving Party <span class="req">*</span></label>
+                                <input type="text" id="party_two_nda" name="party_two_nda" required>
+                            </div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="start_date_nda">Effective Date <span class="req">*</span></label>
+                                <input type="date" id="start_date_nda" name="start_date_nda" required>
+                            </div>
+                            <div class="field">
+                                <label for="duration_nda">Duration <span class="req">*</span></label>
+                                <input type="text" id="duration_nda" name="duration_nda" placeholder="e.g., 2 years" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="purpose_nda">Purpose <span class="req">*</span></label>
+                            <textarea id="purpose_nda" name="purpose_nda" required></textarea>
+                        </div>
+                        <div class="field">
+                            <label for="additional_terms_nda">Additional Terms</label>
+                            <textarea id="additional_terms_nda" name="additional_terms_nda"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Lease Agreement Fields -->
+                    <div class="field-group hidden" id="group-lease_agreement">
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="party_one_lease">Landlord Name <span class="req">*</span></label>
+                                <input type="text" id="party_one_lease" name="party_one_lease" required>
+                            </div>
+                            <div class="field">
+                                <label for="party_two_lease">Tenant Name <span class="req">*</span></label>
+                                <input type="text" id="party_two_lease" name="party_two_lease" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="property_address">Property Address <span class="req">*</span></label>
+                            <textarea id="property_address" name="property_address" required></textarea>
+                        </div>
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="start_date_lease">Lease Start Date <span class="req">*</span></label>
+                                <input type="date" id="start_date_lease" name="start_date_lease" required>
+                            </div>
+                            <div class="field">
+                                <label for="duration_lease">Lease Duration <span class="req">*</span></label>
+                                <input type="text" id="duration_lease" name="duration_lease" placeholder="e.g., 12 months" required>
+                            </div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="salary_lease">Monthly Rent <span class="req">*</span></label>
+                                <input type="text" id="salary_lease" name="salary_lease" placeholder="e.g., $1,500" required>
+                            </div>
+                            <div class="field">
+                                <label for="security_deposit">Security Deposit <span class="req">*</span></label>
+                                <input type="text" id="security_deposit" name="security_deposit" placeholder="e.g., $3,000" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="additional_terms_lease">Additional Terms</label>
+                            <textarea id="additional_terms_lease" name="additional_terms_lease"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Service Agreement Fields -->
+                    <div class="field-group hidden" id="group-service_agreement">
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="party_one_svc">Client Name <span class="req">*</span></label>
+                                <input type="text" id="party_one_svc" name="party_one_svc" required>
+                            </div>
+                            <div class="field">
+                                <label for="party_two_svc">Service Provider <span class="req">*</span></label>
+                                <input type="text" id="party_two_svc" name="party_two_svc" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="purpose_svc">Services Description <span class="req">*</span></label>
+                            <textarea id="purpose_svc" name="purpose_svc" required></textarea>
+                        </div>
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="start_date_svc">Start Date <span class="req">*</span></label>
+                                <input type="date" id="start_date_svc" name="start_date_svc" required>
+                            </div>
+                            <div class="field">
+                                <label for="duration_svc">Duration <span class="req">*</span></label>
+                                <input type="text" id="duration_svc" name="duration_svc" placeholder="e.g., 3 months" required>
+                            </div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="salary_svc">Payment Amount <span class="req">*</span></label>
+                                <input type="text" id="salary_svc" name="salary_svc" placeholder="e.g., $10,000" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="additional_terms_svc">Additional Terms</label>
+                            <textarea id="additional_terms_svc" name="additional_terms_svc"></textarea>
+                        </div>
+                    </div>
+
+                    <div id="form-error" class="form-error hidden"></div>
+
+                    <button type="submit" id="generate-btn">
+                        <span class="btn-text">✨ Generate Document</span>
+                        <span class="btn-loader hidden">
+                            <span class="spinner"></span> Generating...
+                        </span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Right: Output Panel -->
+            <div class="output-panel" id="output-panel">
+                <div class="output-placeholder" id="output-placeholder">
+                    <div class="placeholder-icon">📄</div>
+                    <p>Your generated document will appear here.</p>
+                </div>
+                <div class="output-document hidden" id="output-document">
+                    <div class="output-header">
+                        <h3 id="output-title">Document</h3>
+                        <button type="button" class="copy-btn" id="copy-btn">⎘ Copy</button>
+                    </div>
+                    <div class="output-content" id="output-content"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>⚖ LegalEase is powered by Google Gemini AI. Documents are for reference and educational purposes only. Always consult a licensed attorney for legal advice.</p>
+    </footer>
+
+    <script>
+        const tabs = document.querySelectorAll('.doc-tab');
+        const groups = document.querySelectorAll('.field-group');
+        const docTypeInput = document.getElementById('document_type');
+        const form = document.getElementById('doc-form');
+        const generateBtn = document.getElementById('generate-btn');
+        const btnText = generateBtn.querySelector('.btn-text');
+        const btnLoader = generateBtn.querySelector('.btn-loader');
+        const formError = document.getElementById('form-error');
+        const outputPlaceholder = document.getElementById('output-placeholder');
+        const outputDocument = document.getElementById('output-document');
+        const outputContent = document.getElementById('output-content');
+        const outputTitle = document.getElementById('output-title');
+
+        const DOC_LABELS = {
+            employment_contract: 'Employment Contract',
+            nda: 'Non-Disclosure Agreement',
+            lease_agreement: 'Lease Agreement',
+            service_agreement: 'Service Agreement',
+        };
+
+        // Tab switching
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                groups.forEach(g => g.classList.add('hidden'));
+                tab.classList.add('active');
+                const type = tab.dataset.type;
+                docTypeInput.value = type;
+                document.getElementById(`group-${type}`).classList.remove('hidden');
+            });
+        });
+
+        // Form submission
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            formError.classList.add('hidden');
+
+            const docType = docTypeInput.value;
+            const formData = new FormData(form);
+            const payload = { document_type: docType };
+
+            // Map form fields to payload based on document type
+            const fieldMap = {
+                employment_contract: ['employer_name', 'employee_name', 'job_title', 'start_date', 'salary', 'work_location', 'additional_terms'],
+                nda: ['party_one', 'party_two', 'start_date', 'purpose', 'duration', 'additional_terms'],
+                lease_agreement: ['party_one', 'party_two', 'property_address', 'start_date', 'duration', 'salary', 'security_deposit', 'additional_terms'],
+                service_agreement: ['party_one', 'party_two', 'purpose', 'start_date', 'duration', 'salary', 'additional_terms']
+            };
+
+            const suffix = docType === 'employment_contract' ? '' : docType === 'nda' ? '_nda' : docType === 'lease_agreement' ? '_lease' : '_svc';
+
+            for (const field of fieldMap[docType]) {
+                const inputName = suffix ? field.replace(/(party_one|party_two|start_date|purpose|duration|salary|additional_terms)/, '$1' + suffix) : field;
+                const value = formData.get(inputName);
+                if (value) payload[field] = value;
+            }
+
+            // Validate required fields
+            const requiredFields = {
+                employment_contract: ['employer_name', 'employee_name', 'job_title'],
+                nda: ['party_one', 'party_two', 'purpose'],
+                lease_agreement: ['party_one', 'party_two', 'property_address'],
+                service_agreement: ['party_one', 'party_two', 'purpose']
+            };
+
+            const missing = requiredFields[docType].filter(f => !payload[f]);
+            if (missing.length) {
+                formError.textContent = 'Please fill in all required fields (marked with *).';
+                formError.classList.remove('hidden');
+                return;
+            }
+
+            // Show loading state
+            btnText.classList.add('hidden');
+            btnLoader.classList.remove('hidden');
+            generateBtn.disabled = true;
+
+            try {
+                const response = await fetch('/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+                if (data.error) throw new Error(data.error);
+
+                // Display document
+                outputTitle.textContent = DOC_LABELS[docType];
+                outputContent.textContent = data.document;
+                outputPlaceholder.classList.add('hidden');
+                outputDocument.classList.remove('hidden');
+
+                // Scroll to output on mobile
+                if (window.innerWidth < 900) {
+                    outputDocument.scrollIntoView({ behavior: 'smooth' });
+                }
+            } catch (err) {
+                formError.textContent = `Error: ${err.message}`;
+                formError.classList.remove('hidden');
+            } finally {
+                btnText.classList.remove('hidden');
+                btnLoader.classList.add('hidden');
+                generateBtn.disabled = false;
+            }
+        });
+
+        // Copy to clipboard
+        document.getElementById('copy-btn').addEventListener('click', () => {
+            const text = outputContent.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.getElementById('copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copied!';
+                setTimeout(() => btn.textContent = originalText, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
